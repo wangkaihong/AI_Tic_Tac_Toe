@@ -293,7 +293,7 @@ public class runTicTacToe {
         {
 //            System.out.println("result"+result);
             if (turn == 1) {
-                positionTicTacToe player1NextMove = ai1.myRandomAlgorithm(board, 1); //1 stands for player 1
+                positionTicTacToe player1NextMove = ai1.myAIAlgorithm(board, 1); //1 stands for player 1
                 if (makeMove(player1NextMove, 1, board))
                     printBoardTicTacToe(board);
                 turn = 2;

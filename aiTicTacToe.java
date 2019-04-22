@@ -12,62 +12,70 @@ public class aiTicTacToe {
 	{
 		//TODO: this is where you are going to implement your AI algorithm to win the game. The default is an AI randomly choose any available move.
 		positionTicTacToe myNextMove = new positionTicTacToe(0,0,0);
-		Node root = new Node(board,player);
+		Node root = new Node(board);
 		if(player == 1) {
-            double v = minimax(root, 3, -99999, 99999, true);
+            double[] res = minimax(root, 3, -99999, 99999, true,player);
 //            System.out.print(v);
             ArrayList<Integer> candidates = new ArrayList<>();
             System.out.println("num:"+root.child.size());
-            for (int i = 0; i < root.child.size(); i++) {
-//                System.out.println("player"+player+":"+root.child.get(i).move.x +"," + root.child.get(i).move.y + "," +root.child.get(i).move.z);
-                if (v == root.child.get(i).value) {
-//                    System.out.println(Node.isEnded(root.child.get(i).board));
-//                    System.out.println(root.child.get(i).move.x);
-//                    System.out.println(root.child.get(i).move.y);
-//                    System.out.println(root.child.get(i).move.z);
-//                    System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
-//                    return myNextMove;
-                    candidates.add(i);
-                }
-            }
-            Random rand = new Random();
-            System.out.println(candidates.size());
-            int i = rand.nextInt(candidates.size());
-            myNextMove.x = root.child.get(i).move.x;
-            myNextMove.y = root.child.get(i).move.y;
-            myNextMove.z = root.child.get(i).move.z;
+//            for (int i = 0; i < root.child.size(); i++) {
+//                v = Math.max(v, root.child.get(i).value);
+//            }
+
+//            for (int i = 0; i < root.child.size(); i++) {
+////                System.out.println("player"+player+":"+root.child.get(i).move.x +"," + root.child.get(i).move.y + "," +root.child.get(i).move.z);
+////                System.out.println(root.child.get(i).value+":"+root.child.get(i).move.x+","+root.child.get(i).move.y+","+root.child.get(i).move.z);
+//                if (v == root.child.get(i).value) {
+////                    System.out.println(Node.isEnded(root.child.get(i).board));
+////                    System.out.println(root.child.get(i).move.x);
+////                    System.out.println(root.child.get(i).move.y);
+////                    System.out.println(root.child.get(i).move.z);
+////                    System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
+////                    return myNextMove;
+//                    candidates.add(i);
+//                }
+//            }
+//            Random rand = new Random();
+//            System.out.println(candidates.size());
+//            int i = rand.nextInt(candidates.size());
+
+            myNextMove.x = root.child.get((int)res[1]).move.x;
+            myNextMove.y = root.child.get((int)res[1]).move.y;
+            myNextMove.z = root.child.get((int)res[1]).move.z;
 
             System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
             return myNextMove;
         }
         else {
-            double v = minimax(root, 3, -99999, 99999, false);
+            double[] res = minimax(root, 1, -99999, 99999, true,player);
 //            System.out.print(v);
             ArrayList<Integer> candidates = new ArrayList<>();
             System.out.println("num:"+root.child.size());
+//            for (int i = 0; i < root.child.size(); i++) {
+//                v = Math.max(v, root.child.get(i).value);
+//            }
             for (int i = 0; i < root.child.size(); i++) {
 //                System.out.println("player"+player+":"+root.child.get(i).move.x +"," + root.child.get(i).move.y + "," +root.child.get(i).move.z);
-
-                if (v == root.child.get(i).value) {
-//                    System.out.println(Node.isEnded(root.child.get(i).board));
-//                    System.out.println(root.child.get(i).move.x);
-//                    System.out.println(root.child.get(i).move.y);
-//                    System.out.println(root.child.get(i).move.z);
-                    myNextMove.x = root.child.get(i).move.x;
-                    myNextMove.y = root.child.get(i).move.y;
-                    myNextMove.z = root.child.get(i).move.z;
-                    candidates.add(i);
-//                    System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
-//                    return myNextMove;
-                }
+//                System.out.println(root.child.get(i).value+":"+root.child.get(i).move.x+","+root.child.get(i).move.y+","+root.child.get(i).move.z);
+//                if (v == root.child.get(i).value) {
+////                    System.out.println(Node.isEnded(root.child.get(i).board));
+////                    System.out.println(root.child.get(i).move.x);
+////                    System.out.println(root.child.get(i).move.y);
+////                    System.out.println(root.child.get(i).move.z);
+//                    myNextMove.x = root.child.get(i).move.x;
+//                    myNextMove.y = root.child.get(i).move.y;
+//                    myNextMove.z = root.child.get(i).move.z;
+//                    candidates.add(i);
+////                    System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
+////                    return myNextMove;
+//                }
             }
-            Random rand = new Random();
-            int i = rand.nextInt(candidates.size());
-            System.out.println(candidates.size());
-            myNextMove.x = root.child.get(i).move.x;
-            myNextMove.y = root.child.get(i).move.y;
-            myNextMove.z = root.child.get(i).move.z;
-
+//            Random rand = new Random();
+//            int i = rand.nextInt(candidates.size());
+//            System.out.println(candidates.size());
+            myNextMove.x = root.child.get((int)res[1]).move.x;
+            myNextMove.y = root.child.get((int)res[1]).move.y;
+            myNextMove.z = root.child.get((int)res[1]).move.z;
             System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
             return myNextMove;
         }
@@ -86,45 +94,84 @@ public class aiTicTacToe {
         return myNextMove;
     }
 
-    public double minimax(Node node, int depth, double alpha, double beta, boolean maximizing) {
+    public double[] minimax(Node node, int depth, double alpha, double beta, boolean maximizing, int player) {
 	    if(Node.isEnded(node.board) != 0) {
 //	        System.out.println("End reached!");
-	        return node.value;
+            if((player == 1 && Node.isEnded(node.board) == 1) || (player == 2 && Node.isEnded(node.board) == 2)) {
+                double[] ret = {999,-1};
+                return ret;
+            }
+            else {
+                if((player == 1 && Node.isEnded(node.board) == 2) || (player == 2 && Node.isEnded(node.board) == 1)) {
+                    double[] ret = {-999,-1};
+                    return ret;
+                }
+                else {
+                    if (Node.isEnded(node.board) == -1) {
+                        double[] ret = {0,-1};
+                        return ret;
+                    } else {
+                        System.out.println("Error!");
+                        double[] ret = {-1,-1};
+                        return ret;
+                    }
+                }
+            }
         }
         else{
 	        if(depth == 0) {
 //                System.out.println("heuristic!");
-                node.heuristic();
-                return node.value;
+                double[] ret = {node.heuristic(player),-1};
+                return ret;
             }
             else {
                 if(maximizing) {
 //                    System.out.println("maximizing!");
                     double v = -99999;
                     node.generate_child();
+                    int ind = -1;
                     for(int i = 0; i < node.child.size(); i++) {
-                        v = Math.max(v,minimax(node.child.get(i),depth-1,alpha,beta,false));
+                        double new_v = minimax(node.child.get(i),depth-1,alpha,beta,false,3 - player)[0];
+                        System.out.println(new_v);
+                        if(new_v >= v) {
+                            v = new_v;
+                            ind = i;
+                        }
+//                        v = Math.max(v,minimax(node.child.get(i),depth-1,alpha,beta,false,3 - player));
                         alpha = Math.max(alpha,v);
                         if(alpha >= beta) {
                             break;
                         }
                     }
-                    node.value = v;
-                    return v;
+//                    node.value = v;
+                    double[] ret = new double[2];
+                    ret[0] = v;
+                    ret[1] = ind;
+                    return ret;
                 }
                 else {
 //                    System.out.println("minimizing!");
                     double v = 99999;
                     node.generate_child();
+                    int ind = -1;
                     for(int i = 0; i < node.child.size(); i++) {
-                        v = Math.min(v,minimax(node.child.get(i),depth-1,alpha,beta,true));
+                        double new_v = minimax(node.child.get(i),depth-1,alpha,beta,false,3 - player)[0];
+                        System.out.println(new_v);
+                        if(new_v <= v) {
+                            v = new_v;
+                            ind = i;
+                        }
+//                        v = Math.min(v,minimax(node.child.get(i),depth-1,alpha,beta,true, 3 - player));
                         beta = Math.min(beta,v);
                         if(alpha >= beta) {
                             break;
                         }
                     }
-                    node.value = v;
-                    return v;
+//                    node.value = v;
+                    double[] ret = new double[2];
+                    ret[0] = v;
+                    ret[1] = ind;
+                    return ret;
                 }
             }
         }

@@ -6,41 +6,14 @@ import java.util.List;
 public class Node {
     public List<positionTicTacToe> board;
     public ArrayList<Node> child;
-    public double value;
     public int player;
-    public positionTicTacToe move;
     private static List<List<positionTicTacToe>> winningLines = new ArrayList<>();
+    public positionTicTacToe move;
 
-
-    public Node(List<positionTicTacToe> board, int player) {
+    public Node(List<positionTicTacToe> board) {
         winningLines = initializeWinningLines();
         this.board = board;
-        this.player = player;
-        move = null;
         child = new ArrayList<>();
-        value = 0;
-        if(isEnded(board) == 3 - player) {
-            value = -999;
-        }
-        else{
-            if(isEnded(board) == player) {
-                value = 999;
-            }
-            else {
-                if(isEnded(board) == -1) {
-                    value = 0;
-                }
-                else {
-                    if (isEnded(board) == 0) {
-                        value = 0;
-                    }
-                    else {
-                        // error
-                        System.exit(1);
-                    }
-                }
-            }
-        }
     }
 
     public void generate_child() {
@@ -52,7 +25,7 @@ public class Node {
                     if(board.get(index).state == 0) {
                         List<positionTicTacToe> new_board = deepCopyATicTacToeBoard(board);
                         new_board.get(index).state = player;
-                        child.add(new Node(new_board,3-player));
+                        child.add(new Node(new_board));
                         child.get(child.size() - 1).move = new positionTicTacToe(i,j,k);
                     }
                 }
@@ -238,7 +211,7 @@ public class Node {
         return targetBoard.get(index).state;
     }
 
-    public void heuristic() {
+    public double heuristic(int player) {
         int counter_self = 0;
         int counter_other = 0;
         for(int i=0;i<winningLines.size();i++)
@@ -253,7 +226,6 @@ public class Node {
             int state2 = getStateOfPositionFromBoard(p2,board);
             int state3 = getStateOfPositionFromBoard(p3,board);
 
-            //if they have the same state (marked by same player) and they are not all marked.
             if(state0 != (3 - player) && state1 != (3 - player) && state2 != (3 - player) && state3 != (3 - player))
             {
                 counter_self += 1;
@@ -263,7 +235,7 @@ public class Node {
                 counter_other += 1;
             }
         }
-        this.value = counter_self - counter_other;
+        return counter_self - counter_other;
 
     }
 }
