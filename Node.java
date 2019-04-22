@@ -53,7 +53,7 @@ public class Node {
                         List<positionTicTacToe> new_board = deepCopyATicTacToeBoard(board);
                         new_board.get(index).state = player;
                         child.add(new Node(new_board,3-player));
-                        move = new positionTicTacToe(i,j,k);
+                        child.get(child.size() - 1).move = new positionTicTacToe(i,j,k);
                     }
                 }
     }

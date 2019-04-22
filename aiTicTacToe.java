@@ -16,31 +16,59 @@ public class aiTicTacToe {
 		if(player == 1) {
             double v = minimax(root, 3, -99999, 99999, true);
 //            System.out.print(v);
+            ArrayList<Integer> candidates = new ArrayList<>();
+            System.out.println("num:"+root.child.size());
             for (int i = 0; i < root.child.size(); i++) {
+//                System.out.println("player"+player+":"+root.child.get(i).move.x +"," + root.child.get(i).move.y + "," +root.child.get(i).move.z);
                 if (v == root.child.get(i).value) {
+//                    System.out.println(Node.isEnded(root.child.get(i).board));
 //                    System.out.println(root.child.get(i).move.x);
 //                    System.out.println(root.child.get(i).move.y);
 //                    System.out.println(root.child.get(i).move.z);
-                    myNextMove.x = root.child.get(i).move.x;
-                    myNextMove.y = root.child.get(i).move.y;
-                    myNextMove.z = root.child.get(i).move.z;
+//                    System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
+//                    return myNextMove;
+                    candidates.add(i);
                 }
             }
+            Random rand = new Random();
+            System.out.println(candidates.size());
+            int i = rand.nextInt(candidates.size());
+            myNextMove.x = root.child.get(i).move.x;
+            myNextMove.y = root.child.get(i).move.y;
+            myNextMove.z = root.child.get(i).move.z;
+
+            System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
             return myNextMove;
         }
         else {
             double v = minimax(root, 3, -99999, 99999, false);
 //            System.out.print(v);
+            ArrayList<Integer> candidates = new ArrayList<>();
+            System.out.println("num:"+root.child.size());
             for (int i = 0; i < root.child.size(); i++) {
+//                System.out.println("player"+player+":"+root.child.get(i).move.x +"," + root.child.get(i).move.y + "," +root.child.get(i).move.z);
+
                 if (v == root.child.get(i).value) {
+//                    System.out.println(Node.isEnded(root.child.get(i).board));
 //                    System.out.println(root.child.get(i).move.x);
 //                    System.out.println(root.child.get(i).move.y);
 //                    System.out.println(root.child.get(i).move.z);
                     myNextMove.x = root.child.get(i).move.x;
                     myNextMove.y = root.child.get(i).move.y;
                     myNextMove.z = root.child.get(i).move.z;
+                    candidates.add(i);
+//                    System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
+//                    return myNextMove;
                 }
             }
+            Random rand = new Random();
+            int i = rand.nextInt(candidates.size());
+            System.out.println(candidates.size());
+            myNextMove.x = root.child.get(i).move.x;
+            myNextMove.y = root.child.get(i).move.y;
+            myNextMove.z = root.child.get(i).move.z;
+
+            System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
             return myNextMove;
         }
 	}
