@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 /**
  * Created by wangkaihong on 2019/4/21.
@@ -30,6 +31,7 @@ public class Node {
                         child.get(child.size() - 1).move = new positionTicTacToe(i,j,k);
                     }
                 }
+        Collections.shuffle(child);
     }
     public static int isEnded(List<positionTicTacToe> board)
     {

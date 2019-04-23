@@ -8,13 +8,12 @@ public class aiTicTacToe {
 		int index = position.x*16+position.y*4+position.z;
 		return board.get(index).state;
 	}
-	public positionTicTacToe myAIAlgorithm(List<positionTicTacToe> board, int player)
+	public positionTicTacToe myAIAlgorithm(List<positionTicTacToe> board, int player, int depth)
 	{
-		//TODO: this is where you are going to implement your AI algorithm to win the game. The default is an AI randomly choose any available move.
 		positionTicTacToe myNextMove = new positionTicTacToe(0,0,0);
 		if(player == 1) {
             Node root = new Node(board,1);
-            double[] res = minimax(root, 1, -99999, 99999, true,player);
+            double[] res = minimax(root, depth, -99999, 99999, true,player);
             System.out.println("num:"+root.child.size());
             myNextMove.x = root.child.get((int)res[1]).move.x;
             myNextMove.y = root.child.get((int)res[1]).move.y;
@@ -25,7 +24,7 @@ public class aiTicTacToe {
         }
         else {
             Node root = new Node(board,2);
-            double[] res = minimax(root, 3, -99999, 99999, true,player);
+            double[] res = minimax(root, depth, -99999, 99999, true,player);
             ArrayList<Integer> candidates = new ArrayList<>();
             System.out.println("num:"+root.child.size());
             myNextMove.x = root.child.get((int)res[1]).move.x;
@@ -51,7 +50,6 @@ public class aiTicTacToe {
 
     public double[] minimax(Node node, int depth, double alpha, double beta, boolean maximizing, int player) {
 	    if(Node.isEnded(node.board) != 0) {
-//	        System.out.println("End reached!");
             if((player == 1 && Node.isEnded(node.board) == 1) || (player == 2 && Node.isEnded(node.board) == 2)) {
                 double[] ret = {999,-1};
                 return ret;
@@ -75,19 +73,16 @@ public class aiTicTacToe {
         }
         else{
 	        if(depth == 0) {
-//                System.out.println("heuristic!"+node.heuristic(player));
                 double[] ret = {node.heuristic(player),-1};
                 return ret;
             }
             else {
                 if(maximizing) {
-//                    System.out.println("maximizing!");
                     double v = -99999;
                     node.generate_child();
                     ArrayList<Integer> ind = new ArrayList<>();
                     for(int i = 0; i < node.child.size(); i++) {
                         double new_v = minimax(node.child.get(i),depth-1,alpha,beta,false, player)[0];
-//                        System.out.println(i+"-"+node.child.get(i).move.x+","+node.child.get(i).move.y+","+node.child.get(i).move.z+","+new_v);
                         if(new_v > v) {
                             v = new_v;
                             ind.clear();
@@ -95,13 +90,16 @@ public class aiTicTacToe {
                         if(new_v == v) {
                             ind.add(i);
                         }
-
+                        alpha = Math.max(new_v,alpha);
+                        if(alpha >= beta) {
+                            break;
+                        }
                     }
                     double[] ret = new double[2];
                     ret[0] = v;
                     Random rand = new Random();
                     int i = rand.nextInt(ind.size());
-                    ret[1] = ind.get(i);
+                    ret[1] = ind.get(0);
                     return ret;
                 }
                 else {
@@ -117,14 +115,17 @@ public class aiTicTacToe {
                         if(new_v == v) {
                             ind.add(i);
                         }
-
+                        beta = Math.min(new_v,beta);
+                        if(alpha >= beta) {
+                            break;
+                        }
                     }
 
                     double[] ret = new double[2];
                     ret[0] = v;
                     Random rand = new Random();
                     int i = rand.nextInt(ind.size());
-                    ret[1] = ind.get(i);
+                    ret[1] = ind.get(0);
                     return ret;
                 }
             }
