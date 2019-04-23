@@ -10,10 +10,11 @@ public class Node {
     private static List<List<positionTicTacToe>> winningLines = new ArrayList<>();
     public positionTicTacToe move;
 
-    public Node(List<positionTicTacToe> board) {
+    public Node(List<positionTicTacToe> board, int player) {
         winningLines = initializeWinningLines();
         this.board = board;
         child = new ArrayList<>();
+        this.player = player;
     }
 
     public void generate_child() {
@@ -25,7 +26,7 @@ public class Node {
                     if(board.get(index).state == 0) {
                         List<positionTicTacToe> new_board = deepCopyATicTacToeBoard(board);
                         new_board.get(index).state = player;
-                        child.add(new Node(new_board));
+                        child.add(new Node(new_board,3-player));
                         child.get(child.size() - 1).move = new positionTicTacToe(i,j,k);
                     }
                 }

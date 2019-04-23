@@ -370,6 +370,117 @@ public class runTicTacToe {
         return -1; //call it a draw
     }
 
+    public void fakerun() {
+
+        Random rand = new Random();
+        int turn = rand.nextInt(2) + 1; //1 = player1's turn, 2 = player2's turn, who go first is randomized
+        positionTicTacToe player2NextMove1 = new positionTicTacToe(0,0,0);
+        positionTicTacToe player2NextMove2 = new positionTicTacToe(0,2,0);
+        positionTicTacToe player2NextMove3 = new positionTicTacToe(0,3,0);
+        positionTicTacToe player2NextMove4 = new positionTicTacToe(2,0,0);
+        positionTicTacToe player2NextMove5 = new positionTicTacToe(3,2,0);
+        positionTicTacToe player2NextMove6 = new positionTicTacToe(1,2,1);
+        positionTicTacToe player2NextMove7 = new positionTicTacToe(2,1,1);
+        positionTicTacToe player2NextMove8 = new positionTicTacToe(2,3,1);
+        positionTicTacToe player2NextMove9 = new positionTicTacToe(3,1,1);
+        positionTicTacToe player2NextMove10 = new positionTicTacToe(3,2,1);
+        positionTicTacToe player2NextMove11 = new positionTicTacToe(1,1,2);
+        positionTicTacToe player2NextMove12 = new positionTicTacToe(2,1,2);
+        positionTicTacToe player2NextMove13 = new positionTicTacToe(0,0,3);
+        positionTicTacToe player2NextMove14 = new positionTicTacToe(1,0,3);
+        positionTicTacToe player2NextMove15 = new positionTicTacToe(1,2,3);
+        positionTicTacToe player2NextMove16 = new positionTicTacToe(2,2,3);
+        makeMove(player2NextMove1, 2, board);
+        makeMove(player2NextMove2, 2, board);
+        makeMove(player2NextMove3, 2, board);
+        makeMove(player2NextMove4, 2, board);
+        makeMove(player2NextMove5, 2, board);
+        makeMove(player2NextMove6, 2, board);
+        makeMove(player2NextMove7, 2, board);
+        makeMove(player2NextMove8, 2, board);
+        makeMove(player2NextMove9, 2, board);
+        makeMove(player2NextMove10, 2, board);
+        makeMove(player2NextMove11, 2, board);
+        makeMove(player2NextMove12, 2, board);
+        makeMove(player2NextMove13, 2, board);
+        makeMove(player2NextMove14, 2, board);
+        makeMove(player2NextMove15, 2, board);
+        makeMove(player2NextMove16, 2, board);
+
+        positionTicTacToe player1NextMove1 = new positionTicTacToe(1,3,0);
+        positionTicTacToe player1NextMove2 = new positionTicTacToe(2,1,0);
+        positionTicTacToe player1NextMove3 = new positionTicTacToe(3,3,0);
+        positionTicTacToe player1NextMove4 = new positionTicTacToe(0,2,1);
+        positionTicTacToe player1NextMove5 = new positionTicTacToe(1,0,1);
+        positionTicTacToe player1NextMove6 = new positionTicTacToe(1,3,1);
+        positionTicTacToe player1NextMove7 = new positionTicTacToe(2,2,1);
+        positionTicTacToe player1NextMove8 = new positionTicTacToe(3,0,1);
+        positionTicTacToe player1NextMove9 = new positionTicTacToe(3,3,1);
+        positionTicTacToe player1NextMove10 = new positionTicTacToe(0,1,2);
+        positionTicTacToe player1NextMove11 = new positionTicTacToe(1,2,2);
+        positionTicTacToe player1NextMove12 = new positionTicTacToe(2,0,2);
+        positionTicTacToe player1NextMove13 = new positionTicTacToe(2,2,2);
+        positionTicTacToe player1NextMove14 = new positionTicTacToe(2,3,2);
+        positionTicTacToe player1NextMove15 = new positionTicTacToe(0,3,3);
+        positionTicTacToe player1NextMove16 = new positionTicTacToe(3,0,3);
+        positionTicTacToe player1NextMove17 = new positionTicTacToe(3,1,3);
+        makeMove(player1NextMove1, 1, board);
+        makeMove(player1NextMove2, 1, board);
+        makeMove(player1NextMove3, 1, board);
+        makeMove(player1NextMove4, 1, board);
+        makeMove(player1NextMove5, 1, board);
+        makeMove(player1NextMove6, 1, board);
+        makeMove(player1NextMove7, 1, board);
+        makeMove(player1NextMove8, 1, board);
+        makeMove(player1NextMove9, 1, board);
+        makeMove(player1NextMove10, 1, board);
+        makeMove(player1NextMove11, 1, board);
+        makeMove(player1NextMove12, 1, board);
+        makeMove(player1NextMove13, 1, board);
+        makeMove(player1NextMove14, 1, board);
+        makeMove(player1NextMove15, 1, board);
+        makeMove(player1NextMove16, 1, board);
+        makeMove(player1NextMove17, 1, board);
+
+        while ((result = isEnded()) == 0) //game loop
+        {
+//            System.out.println("result"+result);
+            if (turn == 1) {
+                positionTicTacToe player1NextMove = ai1.myAIAlgorithm(board, 1); //1 stands for player 1
+                if (makeMove(player1NextMove, 1, board))
+                    printBoardTicTacToe(board);
+                turn = 2;
+            } else if (turn == 2) {
+                positionTicTacToe player2NextMove = ai2.myAIAlgorithm(board, 2); //2 stands for player 2
+                if (makeMove(player2NextMove, 2, board))
+                    printBoardTicTacToe(board);
+                turn = 1;
+            } else {
+                //exception occurs, stop
+                System.out.println("Error!");
+            }
+            System.out.println("++++++++++++++++++++++++++++");
+        }
+
+        //game is ended
+        if (result == 1) {
+            //game ends, player 1 wins
+            System.out.println("Player1 Wins");
+            printBoardTicTacToe(board);
+        } else if (result == 2) {
+            //game ends, player 1 wins
+            System.out.println("Player2 Wins");
+            printBoardTicTacToe(board);
+        } else if (result == -1) {
+            //game ends, it's a draw
+            System.out.println("This is a draw.");
+            printBoardTicTacToe(board);
+        } else {
+            //exception occurs, stop
+            System.out.println("Error!");
+        }
+
+    }
 
     public static void main(String[] args) {
 

@@ -12,33 +12,10 @@ public class aiTicTacToe {
 	{
 		//TODO: this is where you are going to implement your AI algorithm to win the game. The default is an AI randomly choose any available move.
 		positionTicTacToe myNextMove = new positionTicTacToe(0,0,0);
-		Node root = new Node(board);
 		if(player == 1) {
-            double[] res = minimax(root, 3, -99999, 99999, true,player);
-//            System.out.print(v);
-            ArrayList<Integer> candidates = new ArrayList<>();
+            Node root = new Node(board,1);
+            double[] res = minimax(root, 1, -99999, 99999, true,player);
             System.out.println("num:"+root.child.size());
-//            for (int i = 0; i < root.child.size(); i++) {
-//                v = Math.max(v, root.child.get(i).value);
-//            }
-
-//            for (int i = 0; i < root.child.size(); i++) {
-////                System.out.println("player"+player+":"+root.child.get(i).move.x +"," + root.child.get(i).move.y + "," +root.child.get(i).move.z);
-////                System.out.println(root.child.get(i).value+":"+root.child.get(i).move.x+","+root.child.get(i).move.y+","+root.child.get(i).move.z);
-//                if (v == root.child.get(i).value) {
-////                    System.out.println(Node.isEnded(root.child.get(i).board));
-////                    System.out.println(root.child.get(i).move.x);
-////                    System.out.println(root.child.get(i).move.y);
-////                    System.out.println(root.child.get(i).move.z);
-////                    System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
-////                    return myNextMove;
-//                    candidates.add(i);
-//                }
-//            }
-//            Random rand = new Random();
-//            System.out.println(candidates.size());
-//            int i = rand.nextInt(candidates.size());
-
             myNextMove.x = root.child.get((int)res[1]).move.x;
             myNextMove.y = root.child.get((int)res[1]).move.y;
             myNextMove.z = root.child.get((int)res[1]).move.z;
@@ -47,32 +24,10 @@ public class aiTicTacToe {
             return myNextMove;
         }
         else {
-            double[] res = minimax(root, 1, -99999, 99999, true,player);
-//            System.out.print(v);
+            Node root = new Node(board,2);
+            double[] res = minimax(root, 3, -99999, 99999, true,player);
             ArrayList<Integer> candidates = new ArrayList<>();
             System.out.println("num:"+root.child.size());
-//            for (int i = 0; i < root.child.size(); i++) {
-//                v = Math.max(v, root.child.get(i).value);
-//            }
-            for (int i = 0; i < root.child.size(); i++) {
-//                System.out.println("player"+player+":"+root.child.get(i).move.x +"," + root.child.get(i).move.y + "," +root.child.get(i).move.z);
-//                System.out.println(root.child.get(i).value+":"+root.child.get(i).move.x+","+root.child.get(i).move.y+","+root.child.get(i).move.z);
-//                if (v == root.child.get(i).value) {
-////                    System.out.println(Node.isEnded(root.child.get(i).board));
-////                    System.out.println(root.child.get(i).move.x);
-////                    System.out.println(root.child.get(i).move.y);
-////                    System.out.println(root.child.get(i).move.z);
-//                    myNextMove.x = root.child.get(i).move.x;
-//                    myNextMove.y = root.child.get(i).move.y;
-//                    myNextMove.z = root.child.get(i).move.z;
-//                    candidates.add(i);
-////                    System.out.println("player"+player+":"+myNextMove.x +"," + myNextMove.y + "," +myNextMove.z);
-////                    return myNextMove;
-//                }
-            }
-//            Random rand = new Random();
-//            int i = rand.nextInt(candidates.size());
-//            System.out.println(candidates.size());
             myNextMove.x = root.child.get((int)res[1]).move.x;
             myNextMove.y = root.child.get((int)res[1]).move.y;
             myNextMove.z = root.child.get((int)res[1]).move.z;
@@ -120,7 +75,7 @@ public class aiTicTacToe {
         }
         else{
 	        if(depth == 0) {
-//                System.out.println("heuristic!");
+//                System.out.println("heuristic!"+node.heuristic(player));
                 double[] ret = {node.heuristic(player),-1};
                 return ret;
             }
@@ -129,48 +84,47 @@ public class aiTicTacToe {
 //                    System.out.println("maximizing!");
                     double v = -99999;
                     node.generate_child();
-                    int ind = -1;
+                    ArrayList<Integer> ind = new ArrayList<>();
                     for(int i = 0; i < node.child.size(); i++) {
-                        double new_v = minimax(node.child.get(i),depth-1,alpha,beta,false,3 - player)[0];
-                        System.out.println(new_v);
-                        if(new_v >= v) {
+                        double new_v = minimax(node.child.get(i),depth-1,alpha,beta,false, player)[0];
+//                        System.out.println(i+"-"+node.child.get(i).move.x+","+node.child.get(i).move.y+","+node.child.get(i).move.z+","+new_v);
+                        if(new_v > v) {
                             v = new_v;
-                            ind = i;
+                            ind.clear();
                         }
-//                        v = Math.max(v,minimax(node.child.get(i),depth-1,alpha,beta,false,3 - player));
-                        alpha = Math.max(alpha,v);
-                        if(alpha >= beta) {
-                            break;
+                        if(new_v == v) {
+                            ind.add(i);
                         }
+
                     }
-//                    node.value = v;
                     double[] ret = new double[2];
                     ret[0] = v;
-                    ret[1] = ind;
+                    Random rand = new Random();
+                    int i = rand.nextInt(ind.size());
+                    ret[1] = ind.get(i);
                     return ret;
                 }
                 else {
-//                    System.out.println("minimizing!");
                     double v = 99999;
                     node.generate_child();
-                    int ind = -1;
+                    ArrayList<Integer> ind = new ArrayList<>();
                     for(int i = 0; i < node.child.size(); i++) {
-                        double new_v = minimax(node.child.get(i),depth-1,alpha,beta,false,3 - player)[0];
-                        System.out.println(new_v);
-                        if(new_v <= v) {
+                        double new_v = minimax(node.child.get(i),depth-1,alpha,beta,false, player)[0];
+                        if(new_v < v) {
                             v = new_v;
-                            ind = i;
+                            ind.clear();
                         }
-//                        v = Math.min(v,minimax(node.child.get(i),depth-1,alpha,beta,true, 3 - player));
-                        beta = Math.min(beta,v);
-                        if(alpha >= beta) {
-                            break;
+                        if(new_v == v) {
+                            ind.add(i);
                         }
+
                     }
-//                    node.value = v;
+
                     double[] ret = new double[2];
                     ret[0] = v;
-                    ret[1] = ind;
+                    Random rand = new Random();
+                    int i = rand.nextInt(ind.size());
+                    ret[1] = ind.get(i);
                     return ret;
                 }
             }
@@ -316,4 +270,5 @@ public class aiTicTacToe {
 	{
 		player = setPlayer;
 	}
+
 }
