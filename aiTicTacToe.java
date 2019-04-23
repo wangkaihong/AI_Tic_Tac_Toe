@@ -13,7 +13,7 @@ public class aiTicTacToe {
 		positionTicTacToe myNextMove = new positionTicTacToe(0,0,0);
 		if(player == 1) {
             Node root = new Node(board,1);
-            double[] res = minimax(root, depth, -99999, 99999, true,player);
+            double[] res = minimax(root, depth, -99999, 99999, true,player,0);
             System.out.println("num:"+root.child.size());
             myNextMove.x = root.child.get((int)res[1]).move.x;
             myNextMove.y = root.child.get((int)res[1]).move.y;
@@ -24,7 +24,7 @@ public class aiTicTacToe {
         }
         else {
             Node root = new Node(board,2);
-            double[] res = minimax(root, depth, -99999, 99999, true,player);
+            double[] res = minimax(root, depth, -99999, 99999, true,player,0);
             ArrayList<Integer> candidates = new ArrayList<>();
             System.out.println("num:"+root.child.size());
             myNextMove.x = root.child.get((int)res[1]).move.x;
@@ -48,15 +48,15 @@ public class aiTicTacToe {
         return myNextMove;
     }
 
-    public double[] minimax(Node node, int depth, double alpha, double beta, boolean maximizing, int player) {
+    public double[] minimax(Node node, int depth, double alpha, double beta, boolean maximizing, int player, int height) {
 	    if(Node.isEnded(node.board) != 0) {
             if((player == 1 && Node.isEnded(node.board) == 1) || (player == 2 && Node.isEnded(node.board) == 2)) {
-                double[] ret = {999,-1};
+                double[] ret = {999 - height,-1};
                 return ret;
             }
             else {
                 if((player == 1 && Node.isEnded(node.board) == 2) || (player == 2 && Node.isEnded(node.board) == 1)) {
-                    double[] ret = {-999,-1};
+                    double[] ret = {-999 + height,-1};
                     return ret;
                 }
                 else {
@@ -82,7 +82,7 @@ public class aiTicTacToe {
                     node.generate_child();
                     ArrayList<Integer> ind = new ArrayList<>();
                     for(int i = 0; i < node.child.size(); i++) {
-                        double new_v = minimax(node.child.get(i),depth-1,alpha,beta,false, player)[0];
+                        double new_v = minimax(node.child.get(i),depth-1,alpha,beta,false, player,height + 1)[0];
                         if(new_v > v) {
                             v = new_v;
                             ind.clear();
@@ -107,7 +107,7 @@ public class aiTicTacToe {
                     node.generate_child();
                     ArrayList<Integer> ind = new ArrayList<>();
                     for(int i = 0; i < node.child.size(); i++) {
-                        double new_v = minimax(node.child.get(i),depth-1,alpha,beta,false, player)[0];
+                        double new_v = minimax(node.child.get(i),depth-1,alpha,beta,false, player, height + 1)[0];
                         if(new_v < v) {
                             v = new_v;
                             ind.clear();
